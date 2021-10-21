@@ -1,0 +1,17 @@
+.player-viewport {
+  padding: var(--spacing-unit-lg);
+  color: #fff;
+}
+
+.player-bar {
+  margin-bottom: var(--spacing-unit-lg);
+}
+.player-bar .col {
+  padding: 0 var(--spacing-unit);
+}
+
+.player-title {
+  margin: 0;
+}
+
+/*# sourceMappingURL=Player.css.map */

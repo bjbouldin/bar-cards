@@ -1,0 +1,20 @@
+.hand {
+  display: grid;
+  width: 100%;
+  height: var(--card-height);
+  grid-template-columns: repeat(var(--card-number-one-less, 5), minmax(30px, 1fr)) var(--card-width);
+  margin: var(--spacing-unit-lg) 0;
+  padding: 0 var(--spacing-unit);
+}
+
+.scale-hover.hand {
+  grid-template-columns: repeat(var(--card-number-one-less, 5), minmax(max-content, max-content)) var(--card-width);
+}
+
+.scale-hover {
+  --card-visible-width: calc((100vw - var(--card-width)) / var(--card-number))
+}
+
+.scale-hover:hover {
+  --card-visible-width: calc((100vw - var(--card-width)) / (var(--card-number) + 1))
+}

@@ -1,0 +1,47 @@
+.btn {
+  background-color: rgb(var(--color-btn-default) / 100%);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: var(--spacing-unit) var(--spacing-unit);
+  margin: 0;
+  font-weight: bold;
+  border-radius: var(--button-rounding);
+  box-shadow: 0 0.6px 1.1px -8px rgba(0, 0, 0, 0.078),
+  0 2.8px 3.8px -8px rgba(0, 0, 0, 0.242),
+  0 14px 17px -8px rgba(0, 0, 0, 0.35);
+  transition: background-color 200ms ease-in-out;
+
+  &:hover {
+    background-color: rgb(var(--color-btn-default-hover) / 100%);
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    vertical-align: middle;
+  }
+}
+
+.btn + .btn {
+  margin-left: var(--spacing-unit);
+}
+
+.primary:hover {
+  background-color: var(--color-primary);
+}
+
+.secondary {
+  background-color: var(--color-secondary);
+}
+
+.success {
+  background-color: var(--color-success);
+}
+
+.warn:hover {
+  background-color: var(--color-danger);
+}
+
+.danger:hover {
+  background-color: var(--color-danger);
+}

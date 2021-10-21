@@ -1,0 +1,329 @@
+body {
+  --card-width: 160px;
+  --card-height: calc(var(--card-width) * 1.4);
+  --card-margin: 30px;
+  --icon-size: 35px;
+  --icon-wrapper-inner-width: calc(var(--card-width) - (var(--card-margin) * 2));
+  --icon-wrapper-inner-height: calc(var(--card-height) - (var(--card-margin) * 2));
+  --icon-col-width: calc(var(--icon-wrapper-inner) / 3);
+  --icon-col-height: calc(var(--icon-wrapper-inner-height) / 5);
+}
+
+.card {
+  color: #000;
+  display: grid;
+  grid-template-columns: 1fr;
+  transform-style: preserve-3d;
+  position: relative;
+  top: 0;
+  transition: top 150ms ease-in-out, width 200ms ease;
+  width: var(--card-width);
+  height: var(--card-height);
+}
+.card:hover .card-inner {
+  background: #fff;
+}
+.card.selected {
+  top: calc(var(--card-margin) * -1);
+}
+
+.scale-hover .card {
+  width: var(--card-visible-width);
+  max-width: var(--card-width);
+}
+
+.hand:hover .card:hover {
+  width: calc(var(--card-visible-width) * 2);
+}
+
+.card-selection-started .card .card-inner,
+.hand:hover .card .card-inner {
+  background: #ccc;
+}
+.card-selection-started .card.selected .card-inner, .card-selection-started .card:hover .card-inner,
+.hand:hover .card.selected .card-inner,
+.hand:hover .card:hover .card-inner {
+  background: #fff;
+}
+
+.card-inner, .card-inner-back {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  background: #fff;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: calc(var(--card-margin) / 4);
+  box-shadow: -1px 0 4px 0 rgba(0, 0, 0, 0.2), 0.1px 0.3px 0.3px -5px rgba(0, 0, 0, 0.038), 0.1px 0.7px 0.8px -5px rgba(0, 0, 0, 0.056), 0.3px 1.4px 1.5px -5px rgba(0, 0, 0, 0.072), 0.4px 2.5px 2.7px -5px rgba(0, 0, 0, 0.094), 0.8px 4.6px 5px -5px rgba(0, 0, 0, 0.127), 2px 11px 12px -5px rgba(0, 0, 0, 0.17);
+  grid-row: 1/1;
+  grid-column: 1/1;
+  transition: background 200ms ease-in-out;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.card-inner-back {
+  transform: rotateY(180deg);
+  z-index: -1;
+}
+.card-inner-back:after {
+  content: "";
+  background: rgb(var(--card-color));
+  grid-row: 1/1;
+  grid-column: 1/1;
+  margin: calc(var(--card-margin) / 4) auto;
+  width: calc((var(--card-width)) - var(--card-margin) / 2);
+  height: calc((var(--card-height)) - var(--card-margin) / 2);
+  border-radius: calc(var(--card-margin) / 6);
+}
+
+.card.face-down {
+  transform: rotateY(180deg);
+}
+
+.card-number-wrapper {
+  grid-row: 1/-1;
+  grid-column: 1/1;
+  display: grid;
+  align-items: start;
+  justify-content: start;
+  font-size: calc(var(--card-margin) / 1.5);
+  padding: calc(var(--card-margin) / 4);
+}
+.card-number-wrapper .card-number {
+  display: grid;
+  text-align: center;
+}
+
+.card-number-wrapper:last-of-type {
+  align-items: end;
+  justify-content: end;
+}
+
+.card[data-suit=hearts], .card[data-suit=diamonds] {
+  color: rgb(var(--card-heart-color));
+}
+
+.card-inner .card-icon-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - var(--card-margin) * 2);
+  height: calc(100% - var(--card-margin) * 2);
+  margin: var(--card-margin);
+}
+
+.card[data-number="1"] {
+  --icon-top-1: 40%;
+  --icon-left-1: 33%;
+}
+
+.card[data-number="2"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 80%;
+  --icon-left-1: 33%;
+  --icon-left-2: 33%;
+}
+
+.card[data-number="3"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 40%;
+  --icon-top-3: 80%;
+  --icon-left-1: 33%;
+  --icon-left-2: 33%;
+  --icon-left-3: 33%;
+}
+
+.card[data-number="4"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 80%;
+  --icon-top-4: 80%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 0%;
+  --icon-left-4: 66%;
+}
+
+.card[data-number="5"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 40%;
+  --icon-top-4: 80%;
+  --icon-top-5: 80%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 33%;
+  --icon-left-4: 0%;
+  --icon-left-5: 66%;
+}
+
+.card[data-number="6"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 40%;
+  --icon-top-4: 40%;
+  --icon-top-5: 80%;
+  --icon-top-6: 80%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 0%;
+  --icon-left-4: 66%;
+  --icon-left-5: 0%;
+  --icon-left-6: 66%;
+}
+
+.card[data-number="7"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 20%;
+  --icon-top-4: 40%;
+  --icon-top-5: 40%;
+  --icon-top-6: 80%;
+  --icon-top-7: 80%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 33%;
+  --icon-left-4: 0%;
+  --icon-left-5: 66%;
+  --icon-left-6: 0%;
+  --icon-left-7: 66%;
+}
+
+.card[data-number="8"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 20%;
+  --icon-top-4: 40%;
+  --icon-top-5: 40%;
+  --icon-top-6: 80%;
+  --icon-top-7: 80%;
+  --icon-top-8: 60%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 33%;
+  --icon-left-4: 0%;
+  --icon-left-5: 66%;
+  --icon-left-6: 0%;
+  --icon-left-7: 66%;
+  --icon-left-8: 33%;
+}
+
+.card[data-number="9"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 25%;
+  --icon-top-4: 25%;
+  --icon-top-5: 37.5%;
+  --icon-top-6: 50%;
+  --icon-top-7: 50%;
+  --icon-top-8: 75%;
+  --icon-top-9: 75%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 0%;
+  --icon-left-4: 66%;
+  --icon-left-5: 33%;
+  --icon-left-6: 0%;
+  --icon-left-7: 66%;
+  --icon-left-8: 0%;
+  --icon-left-9: 66%;
+  --icon-col-height: calc(var(--icon-wrapper-inner-height) / 4);
+}
+
+.card[data-number="10"] {
+  --icon-top-1: 0%;
+  --icon-top-2: 0%;
+  --icon-top-3: 12.5%;
+  --icon-top-4: 25%;
+  --icon-top-5: 25%;
+  --icon-top-6: 50%;
+  --icon-top-7: 50%;
+  --icon-top-8: 75%;
+  --icon-top-9: 75%;
+  --icon-top-10: 62.5%;
+  --icon-left-1: 0%;
+  --icon-left-2: 66%;
+  --icon-left-3: 33%;
+  --icon-left-4: 0%;
+  --icon-left-5: 66%;
+  --icon-left-6: 0%;
+  --icon-left-7: 66%;
+  --icon-left-8: 0%;
+  --icon-left-9: 66%;
+  --icon-left-10: 33%;
+  --icon-col-height: calc(var(--icon-wrapper-inner-height) / 4);
+}
+
+.card[data-number="11"] .card-icon-wrapper,
+.card[data-number="12"] .card-icon-wrapper,
+.card[data-number="13"] .card-icon-wrapper {
+  border: 1px solid #ccc;
+}
+.card[data-number="11"] .card-icon-wrapper .card-icon-col,
+.card[data-number="12"] .card-icon-wrapper .card-icon-col,
+.card[data-number="13"] .card-icon-wrapper .card-icon-col {
+  display: none;
+}
+
+.card-icon-col {
+  position: absolute;
+  font-size: var(--icon-size);
+  width: var(--icon-col-width);
+  height: var(--icon-col-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-icon-col:nth-child(1) {
+  top: var(--icon-top-1);
+  left: var(--icon-left-1);
+}
+
+.card-icon-col:nth-child(2) {
+  top: var(--icon-top-2);
+  left: var(--icon-left-2);
+}
+
+.card-icon-col:nth-child(3) {
+  top: var(--icon-top-3);
+  left: var(--icon-left-3);
+}
+
+.card-icon-col:nth-child(4) {
+  top: var(--icon-top-4);
+  left: var(--icon-left-4);
+}
+
+.card-icon-col:nth-child(5) {
+  top: var(--icon-top-5);
+  left: var(--icon-left-5);
+}
+
+.card-icon-col:nth-child(6) {
+  top: var(--icon-top-6);
+  left: var(--icon-left-6);
+}
+
+.card-icon-col:nth-child(7) {
+  top: var(--icon-top-7);
+  left: var(--icon-left-7);
+}
+
+.card-icon-col:nth-child(8) {
+  top: var(--icon-top-8);
+  left: var(--icon-left-8);
+}
+
+.card-icon-col:nth-child(9) {
+  top: var(--icon-top-9);
+  left: var(--icon-left-9);
+}
+
+.card-icon-col:nth-child(10) {
+  top: var(--icon-top-10);
+  left: var(--icon-left-10);
+}
+
+/*# sourceMappingURL=Card.css.map */

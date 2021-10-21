@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: var(--color-felt);
+    --spacing-unit: 8px;
+    --spacing-unit-lg: calc(var(--spacing-unit) * 2);
+    --button-rounding: 4px;
+    --color-felt: #1f7d0f;
+
+    --color-btn-default: 80 145 85;
+    --color-btn-default-hover: 41 152 22;
+
+
+    --color-success: #19d17e;
+    --color-primary: #2a7dbd;
+    --color-secondary: #509155;
+    --color-warn: #bd8c2a;
+    --color-danger: #c43740;
+
+    --card-color: 138 28 28;
+    --card-heart-color: 138 28 28;
+}
+
+a {
+    cursor: pointer
+}
+
+.sr-only {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.flex {
+    display: flex;
+}
+
+.col {
+
+}
+
+.col-grow {
+    flex-grow: 1;
+}
+
+@font-face {
+    font-family: 'icons';
+    src: url('Assets/fonts/icons.eot?fuwoou');
+    src: url('Assets/fonts/icons.eot?fuwoou#iefix') format('embedded-opentype'),
+    url('Assets/fonts/icons.ttf?fuwoou') format('truetype'),
+    url('Assets/fonts/icons.woff?fuwoou') format('woff'),
+    url('Assets/fonts/icons.svg?fuwoou#icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icons' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-spades:before {
+    content: "\e917";
+}
+
+.icon-clubs:before {
+    content: "\e918";
+}
+
+.icon-diamonds:before {
+    content: "\e919";
+}
+
+.icon-cog:before {
+    content: "\e994";
+}
+
+.icon-hearts:before {
+    content: "\e9da";
+}
