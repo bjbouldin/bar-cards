@@ -1,0 +1,16 @@
+.label {
+  display: block;
+  width: 100%;
+  font-size: 0.8rem;
+  margin-bottom: var(--spacing-unit-sm);
+}
+
+.form-element {
+  display: block;
+  width: 100%;
+  border: 1px solid white;
+  padding: var(--spacing-unit);
+  border-radius: var(--border-radius-md);
+}
+
+/*# sourceMappingURL=TextInput.css.map */

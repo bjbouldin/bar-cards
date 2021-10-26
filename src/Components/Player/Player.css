@@ -1,6 +1,7 @@
 .player-viewport {
   padding: var(--spacing-unit-lg);
   color: #fff;
+  position: relative;
 }
 
 .player-bar {

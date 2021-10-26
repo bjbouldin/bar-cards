@@ -13,9 +13,14 @@ const selectList = (props) => {
     );
 
     return (
-        <select onChange={props.changed} value={props.value} className={"select-list"}>
-            {options}
-        </select>
+        <label>
+            <span className="label">
+                {props.label}
+            </span>
+            <select onChange={props.changed} value={props.value} className="form-element select-list">
+                {options}
+            </select>
+        </label>
     );
 }
 

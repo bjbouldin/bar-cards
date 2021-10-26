@@ -103,7 +103,7 @@ class App extends Component {
                     hand.push(this.getCard(deck));
                 }
                 players[playerIndex].hand = [...hand]
-                if (players[playerIndex].settings.sort) {
+                if (players[playerIndex].settings.autoSort) {
                     this.sortCards(players[playerIndex].hand)
                 }
             }
@@ -128,7 +128,7 @@ class App extends Component {
         turn++;
         this.setState({turn: turn});
         this.setState({deck: deck});
-        if (players[playerIndex].settings.sort){
+        if (players[playerIndex].settings.autoSort){
             this.sortCardsHandler(players[playerIndex].id)
         } else {
             this.setState({players: players});
@@ -163,13 +163,13 @@ class App extends Component {
                 name: 'Player ' + (players.length + 1),
                 highlightStyle: 'standard',
                 playStyle: 'standard',
-                sort: true,
+                autoSort: true,
                 allowReorder: true,
-                showCardPile: false,
                 playOrder: (players.length + 1),
             },
             hand: [],
             selectedCards: [],
+            currentScreen: 'player',
         }
 
         players.push(newPlayer);
@@ -204,6 +204,19 @@ class App extends Component {
         this.setState({players: players});
     }
 
+    gameSettingsChangedHandler = (settings) => {
+        console.log(settings);
+    }
+
+    playerSettingsChangedHandler = (settingName, newValue, playerId) => {
+        let players = [...this.state.players];
+        const playerIndex = players.findIndex(player => {
+            return player.id === playerId;
+        })
+        players[playerIndex].settings[settingName] = newValue;
+        this.setState({players: players});
+    }
+
     playCardsHandler = (playerId) => {
 
     }
@@ -225,6 +238,7 @@ class App extends Component {
                         sort={this.sortCardsHandler}
                         playCards={this.playCardsHandler}
                         pass={this.passHandler}
+                        settingChange={this.playerSettingsChangedHandler}
                         selectCard={this.selectCardHandler}/>
                 })}
             </Aux>
@@ -233,11 +247,12 @@ class App extends Component {
         return (
             <div className="App">
                 <GameControls
-                    game={this.state.gameSettings.game}
+                    gameSettings={this.state.gameSettings}
                     gameChange={this.gameChangeHandler}
                     newGame={this.newGameHandler}
                     endGame={this.endGameHandler}
                     gameOptions={gameOptions}
+                    settingChange={this.gameSettingsChangedHandler}
                     drawCard={this.drawCardHandler}
                     showEndGameButton={this.state.gameStarted}
                     showGameStartButton={((this.state.players.length) >= this.state.rules.minPlayers && this.state.gameStarted === false)}

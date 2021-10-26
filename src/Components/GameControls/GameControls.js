@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import './GameControls.css';
 import SelectList from "../UI/SelectList/SelectList";
 import Button from "../UI/Button/Button";
+import FullscreenMenu from "../UI/FullscreenMenu/FullscreenMenu";
+import CheckboxSwitch from "../UI/CheckboxSwitch/CheckboxSwitch";
 
 const gameControls = (props) => {
 
@@ -21,6 +23,10 @@ const gameControls = (props) => {
         endGameButton = (<Button btnClasses={['warn']} clicked={props.endGame}>End Game</Button>)
     }
 
+    let settingsChangedHandler = () => {
+        props.settingChange(props.gameSettings)
+    }
+
     return (
         <div className={'gameControls'}>
             <div className={'game-bar flex'}>
@@ -30,13 +36,25 @@ const gameControls = (props) => {
                     {endGameButton}
                 </div>
                 <div className={'col'}>
-                    <Button btnClasses={['game-settings-toggle']}><i className={'icon-cog'} /><span className={'sr-only'}>player settings</span></Button>
+
+                    <FullscreenMenu btnText={'player settings'} btnIcon={'cog'} showBtnText={false}>
+                        <div className={'full-width'}>
+                            <h2>Game Settings</h2>
+                        </div>
+                        <div className={'flex'}>
+                            <div className={'col col-grow'}>
+                                <SelectList options={props.gameOptions} changed={props.gameChange} value={props.game} label={'Game'} />
+                            </div>
+                            <div className={'col col-grow'}>
+                                <CheckboxSwitch changed={settingsChangedHandler} value={true} label={'Auto Sort'} />
+                            </div>
+                        </div>
+                    </FullscreenMenu>
                 </div>
             </div>
             <div className={'game-settings flex'}>
 
             </div>
-            <SelectList options={props.gameOptions} changed={props.gameChange} value={props.game}/>
             {props.children}
         </div>
     );

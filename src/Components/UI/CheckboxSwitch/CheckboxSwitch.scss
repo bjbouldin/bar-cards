@@ -1,0 +1,65 @@
+.switch {
+  --switch-height: 36px;
+  --switch-width: 72px;
+  --toggle-slide-offset: 4px;
+  --toggle-slide-size: 28px;
+  --toggle-move: 36px;
+
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  min-width: var(--switch-width);
+  height: var(--switch-height);
+  margin-bottom: 0;
+  margin-left: 5px;
+  border-radius: calc(var(--switch-height) / 2);
+}
+
+/* Hide default HTML checkbox */
+.switch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+/* The toggle */
+.toggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #fff;
+  box-shadow: inset 0 0 3px rgb(255 255 255 / 30%);
+  border-radius: var(--border-radius-md);
+  transition: all 400s ease;
+}
+
+.toggle-slide {
+  position: absolute;
+  height: var(--toggle-slide-size);
+  width: var(--toggle-slide-size);
+  left: var(--toggle-slide-offset);
+  bottom: var(--toggle-slide-offset);
+  background-color: var(--color-secondary);
+  transition: all 400ms ease;
+  text-align: center;
+  box-shadow: 0 0 4px rgb(255 255 255 / 30%);
+  border-radius: calc(var(--switch-height) / 2);
+}
+
+input:checked + .toggle .toggle-slide,
+.toggle.active .toggle-slide {
+  background-color: var(--mode-background);
+}
+
+input:focus + .toggle {
+  box-shadow: 0 0 1px (255 255 255 / 40%);
+}
+
+input:checked + .toggle .toggle-slide,
+.toggle.active .toggle-slide {
+  transform: translateX(var(--toggle-move));
+}

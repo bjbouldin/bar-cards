@@ -3,9 +3,18 @@ body {
     padding: 0;
     font-family: sans-serif;
     background: var(--color-felt);
+
+    --text-light: #FFFFFF;
+    --text-dark: #545454;
+
+    --border-radius-sm: 2px;
+    --border-radius-md: 4px;
+    --border-radius-lg: 12px;
+
     --spacing-unit: 8px;
+    --spacing-unit-sm: calc(var(--spacing-unit) / 2);
     --spacing-unit-lg: calc(var(--spacing-unit) * 2);
-    --button-rounding: 4px;
+    --button-rounding: var(--border-radius-md);
     --color-felt: #1f7d0f;
 
     --color-btn-default: 80 145 85;
@@ -20,6 +29,8 @@ body {
 
     --card-color: 138 28 28;
     --card-heart-color: 138 28 28;
+
+    --mode-background: #fff;
 }
 
 a {

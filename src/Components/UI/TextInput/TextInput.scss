@@ -1,0 +1,14 @@
+.label {
+  display: block;
+  width: 100%;
+  font-size: .8rem;
+  margin-bottom: var(--spacing-unit-sm);
+}
+
+.form-element {
+  display: block;
+  width: 100%;
+  border: 1px solid rgb(255 255 255 / 100%);
+  padding: var(--spacing-unit);
+  border-radius: var(--border-radius-md);
+}

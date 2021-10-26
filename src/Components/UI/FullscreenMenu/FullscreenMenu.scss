@@ -1,0 +1,50 @@
+.fullscreen-menu {
+  --fullscreen-transition: calc(-100% - (var(--spacing-unit-lg) * 2));
+  transform: translateY(var(--fullscreen-transition));
+  transition: transform 600ms ease;
+  background: rgb(255 255 255 / 40%);
+  background: linear-gradient(126deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.1) 100%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: blur(6px);
+  margin: var(--spacing-unit-lg);
+  padding: var(--spacing-unit-lg);
+
+  h2 {
+    font-size: 1.7em;
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+}
+
+.fullscreen-menu-wrapper {
+  pointer-events: none;
+  background: rgb(0 0 0 / 0%);
+  transition: background 600ms ease;
+  transition-delay: 600ms;
+}
+
+.open + .fullscreen-menu-wrapper {
+  pointer-events: all;
+  background: rgb(0 0 0 / 70%);
+
+  .fullscreen-menu {
+    transform: translateY(0%);
+  }
+}
+
+.fullscreen-menu-wrapper {
+  display: grid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.fullscreen-toggle {
+  position: relative;
+  z-index: 101;
+}

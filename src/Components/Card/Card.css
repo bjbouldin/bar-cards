@@ -16,7 +16,8 @@ body {
   transform-style: preserve-3d;
   position: relative;
   top: 0;
-  transition: top 150ms ease-in-out, width 200ms ease;
+  transition: top 230ms ease-in-out, width 400ms ease;
+  transition-delay: 40ms;
   width: var(--card-width);
   height: var(--card-height);
 }
@@ -32,8 +33,12 @@ body {
   max-width: var(--card-width);
 }
 
-.hand:hover .card:hover {
+.scale-hover:hover .card:hover {
   width: calc(var(--card-visible-width) * 2);
+}
+
+.scale-hover.hand:hover .card:last-child {
+  width: var(--card-width);
 }
 
 .card-selection-started .card .card-inner,

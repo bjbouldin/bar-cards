@@ -1,6 +1,7 @@
 .gameControls {
-  padding: 20px;
+  padding: var(--spacing-unit-lg);
   color: #fff;
+  position: relative;
 }
 
 /*# sourceMappingURL=GameControls.css.map */

@@ -1,10 +1,13 @@
 .hand {
   display: grid;
   width: 100%;
+  max-width: calc(var(--card-width) * var(--card-number));
   height: var(--card-height);
   grid-template-columns: repeat(var(--card-number-one-less, 5), minmax(30px, 1fr)) var(--card-width);
   margin: var(--spacing-unit-lg) 0;
   padding: 0 var(--spacing-unit);
+  --handAreaPadding: calc((var(--spacing-unit) + var(--spacing-unit-lg)) * 2);
+  --handPlayArea: calc(100vw - var(--handAreaPadding));
 }
 
 .scale-hover.hand {
@@ -12,9 +15,9 @@
 }
 
 .scale-hover {
-  --card-visible-width: calc((100vw - var(--card-width)) / var(--card-number))
+  --card-visible-width: calc((var(--handPlayArea) - var(--card-width)) / (var(--card-number) - 1))
 }
 
 .scale-hover:hover {
-  --card-visible-width: calc((100vw - var(--card-width)) / (var(--card-number) + 1))
+  --card-visible-width: calc((var(--handPlayArea) - var(--card-width)) / ((var(--card-number) + 0)))
 }

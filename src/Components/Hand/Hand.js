@@ -13,7 +13,7 @@ const hand = (props) => {
     });
     let handStyle = {'--card-number': props.hand.length,'--card-number-one-less': props.hand.length-1};
 
-    //handClasses.push('scale-hover');
+    handClasses.push('scale-hover');
 
     return (
         <div className={handClasses.join(' ')} style={handStyle}>
