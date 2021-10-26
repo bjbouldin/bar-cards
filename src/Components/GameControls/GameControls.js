@@ -52,10 +52,9 @@ const gameControls = (props) => {
                     </FullscreenMenu>
                 </div>
             </div>
-            <div className={'game-settings flex'}>
-
+            <div className={'play-field'}>
+                {props.children}
             </div>
-            {props.children}
         </div>
     );
 }

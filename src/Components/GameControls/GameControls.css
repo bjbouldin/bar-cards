@@ -4,4 +4,9 @@
   position: relative;
 }
 
+.play-field {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 /*# sourceMappingURL=GameControls.css.map */

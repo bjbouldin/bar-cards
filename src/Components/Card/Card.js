@@ -1,14 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './Card.css';
 
 const card = (props) => {
     const [displayIcons, setDisplayIcons] = useState(null);
+    const [cardClasses, setCardClasses] = useState(['card']);
+    const [newCardClass, setNewCardClass] = useState('new-card');
 
     const {number, suit, displayNumber, selected} = props.card;
+
     useEffect(() => {
         setDisplayIcons(setIconsHandler());
-        return () => {}
+    }, [])
+
+    useEffect(() => {
+
+        let cardClassesCopy = [...cardClasses];
+        (props.faceDown) ? cardClassesCopy.push('face-down') : null;
+        setCardClasses(cardClassesCopy);
+
+        //remove new card class
+        setTimeout(() => {
+            setNewCardClass('old-card');
+        }, 4000)
     }, [])
 
     let setIconsHandler = () => {
@@ -21,21 +35,19 @@ const card = (props) => {
         })}</span>);
     }
 
-    let cardClasses = ['card'];
-    (selected) ? cardClasses.push('selected') : null;
-    (props.faceDown) ? cardClasses.push('face-down') : null;
-
-
     let selectCardHandler = () => {
+        //skip class setting when clicking the deck
+        if (number){
+            let cardClassesCopy = [...cardClasses];
+            (selected) ? cardClassesCopy.pop() : cardClassesCopy.push('selected');
+            setCardClasses(cardClassesCopy);
+        }
+
         props.selectCard(props.card);
     }
 
-    if (props.newCard) {
-
-    }
-
     return (
-        <div className={cardClasses.join(' ')} data-number={number} data-suit={suit}>
+        <div className={cardClasses.join(' ') + ' ' + newCardClass} data-number={number} data-suit={suit}>
             <a className={'card-inner'} onClick={selectCardHandler}>
                 <span className={'sr-only'}>select the {displayNumber} of {suit}</span>
                 {displayIcons}

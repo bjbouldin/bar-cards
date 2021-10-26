@@ -10,9 +10,11 @@ import Aux from './hoc/Aux';
 const newCards = [];
 
 class App extends Component {
+
     state = {
         turn: 0,
         deck: [],
+        discard: [],
         gameSettings: {
             game: 'war',
             houseRules: [],
@@ -36,6 +38,10 @@ class App extends Component {
             faceDown: false,
             canPass: true,
         }
+    }
+
+    componentDidMount() {
+        this.shuffleDeckHandler();
     }
 
     sortCards = (hand) => {
@@ -135,6 +141,10 @@ class App extends Component {
         }
     }
 
+    shuffleDiscardHandler = () => {
+        console.log('shuffle')
+    }
+
     newGameHandler = () => {
         if (this.state.players.length < this.state.rules.minPlayers) {
             return;
@@ -200,7 +210,6 @@ class App extends Component {
             return card.value === handCard.value;
         })
         players[playerIndex].hand[cardIndex].selected = !players[playerIndex].hand[cardIndex].selected;
-        players[playerIndex].selectedCards.push(card);
         this.setState({players: players});
     }
 
@@ -236,6 +245,7 @@ class App extends Component {
                         rules={this.state.rules}
                         key={player.id}
                         sort={this.sortCardsHandler}
+                        turn={this.state.turn}
                         playCards={this.playCardsHandler}
                         pass={this.passHandler}
                         settingChange={this.playerSettingsChangedHandler}
@@ -260,8 +270,14 @@ class App extends Component {
                     newPlayer={this.newPlayerHandler}>
                     <Deck
                         drawCard={this.drawCardHandler}
-                        players={this.state.players}
-                        rules={this.state.rules}/>
+                        deck={this.state.deck} />
+                    {/*<PlayArea*/}
+                    {/*    drawCard={this.drawCardHandler}*/}
+                    {/*    players={this.state.players}*/}
+                    {/*    rules={this.state.rules} />*/}
+                    <Deck
+                        drawCard={this.shuffleDiscardHandler}
+                        deck={this.state.discard} />
                 </GameControls>
                 {players}
             </div>

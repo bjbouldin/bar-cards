@@ -2,8 +2,13 @@
   position: relative;
   width: var(--card-width);
   height: var(--card-height);
-  margin: 20px 20px 20px 0;
-  .card-wrapper:hover .card {
+  margin: var(--spacing-unit-lg);
+  display: grid;
+  grid-template-columns: repeat(20, 2px);
+  .card:not(:first-child) .card-inner-back {
+    box-shadow:-2px 0 2px 0 rgb(0 0 0 / 20%);
+  }
+  .card.selected {
     top: 0;
   }
 }
