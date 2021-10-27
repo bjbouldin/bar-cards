@@ -33,6 +33,7 @@ const fullscreenMenu = (props) => {
             </Button>
             <div className={'fullscreen-menu-wrapper'}>
                 <div className={'fullscreen-menu'}>
+                    <a className={'close'} onClick={toggleMenu}><span>X</span></a>
                     {props.children}
                 </div>
             </div>

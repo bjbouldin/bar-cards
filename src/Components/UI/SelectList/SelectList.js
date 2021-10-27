@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './SelectList.css';
 import Aux from "../../../hoc/Aux";
 
 const selectList = (props) => {
+    const [inputValue, setInputValue] = useState(props.value);
+
     let options = (
         <Aux>
             {props.options.map((option, index) => {
@@ -12,12 +14,20 @@ const selectList = (props) => {
         </Aux>
     );
 
+    useEffect(() => {
+        props.changed(inputValue);
+    }, [inputValue]);
+
+    const change = (event) => {
+        setInputValue(event.target.value);
+    }
+
     return (
         <label>
             <span className="label">
                 {props.label}
             </span>
-            <select onChange={props.changed} value={props.value} className="form-element select-list">
+            <select onChange={change} value={props.value} className="form-element select-list">
                 {options}
             </select>
         </label>

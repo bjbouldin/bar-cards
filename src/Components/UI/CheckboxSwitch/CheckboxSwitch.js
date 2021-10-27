@@ -6,7 +6,7 @@ const checkboxSwitch = (props) => {
 
     const [checkboxValue, setCheckboxValue] = useState(props.value);
 
-    React.useEffect(() => {
+    useEffect(() => {
         props.changed(checkboxValue);
     }, [checkboxValue]);
 

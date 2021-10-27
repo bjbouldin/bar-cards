@@ -10,15 +10,15 @@
   --handPlayArea: calc(100vw - var(--handAreaPadding));
 }
 
-.scale-hover.hand {
+.scaleHover.hand {
   grid-template-columns: repeat(var(--card-number-one-less, 5), minmax(max-content, max-content)) var(--card-width);
 }
 
-.scale-hover {
+.scaleHover {
   --card-visible-width: calc((var(--handPlayArea) - var(--card-width)) / (var(--card-number) - 1)) ;
 }
 
-.scale-hover:hover {
+.scaleHover:hover {
   --card-visible-width: calc((var(--handPlayArea) - var(--card-width)) / ((var(--card-number) + 0))) ;
 }
 

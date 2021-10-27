@@ -5,7 +5,6 @@ import './Card.css';
 const card = (props) => {
     const [displayIcons, setDisplayIcons] = useState(null);
     const [cardClasses, setCardClasses] = useState(['card']);
-    const [newCardClass, setNewCardClass] = useState('new-card');
 
     const {number, suit, displayNumber, selected} = props.card;
 
@@ -18,11 +17,6 @@ const card = (props) => {
         let cardClassesCopy = [...cardClasses];
         (props.faceDown) ? cardClassesCopy.push('face-down') : null;
         setCardClasses(cardClassesCopy);
-
-        //remove new card class
-        setTimeout(() => {
-            setNewCardClass('old-card');
-        }, 4000)
     }, [])
 
     let setIconsHandler = () => {
@@ -47,7 +41,7 @@ const card = (props) => {
     }
 
     return (
-        <div className={cardClasses.join(' ') + ' ' + newCardClass} data-number={number} data-suit={suit}>
+        <div className={cardClasses.join(' ')} data-number={number} data-suit={suit}>
             <a className={'card-inner'} onClick={selectCardHandler}>
                 <span className={'sr-only'}>select the {displayNumber} of {suit}</span>
                 {displayIcons}

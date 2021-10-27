@@ -50,7 +50,7 @@
 
 input:checked + .toggle .toggle-slide,
 .toggle.active .toggle-slide {
-  background-color: var(--mode-background);
+  background-color: rgb(var(--mode-background));
 }
 
 input:focus + .toggle {

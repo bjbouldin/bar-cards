@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Hand from '../../Components/Hand/Hand';
 import './Player.css';
+import Hand from '../../Components/Hand/Hand';
 import Button from "../UI/Button/Button";
 import FullscreenMenu from "../UI/FullscreenMenu/FullscreenMenu";
 import SelectList from "../UI/SelectList/SelectList";
@@ -9,6 +9,11 @@ import TextInput from "../UI/TextInput/TextInput";
 import CheckboxSwitch from "../UI/CheckboxSwitch/CheckboxSwitch";
 
 const player = (props) => {
+
+    const playerSettingsOptions = {
+        highlightStyle: ['standard', 'scaleHover', 'raiseHover'],
+        playStyle: ['standard', 'fancy', 'obnoxious']
+    }
 
     const {hand, settings, id} = props.player;
 
@@ -57,13 +62,13 @@ const player = (props) => {
     }
 
     let passButton = null;
-    if (props.rules.canPass && (props.turn % settings.playOrder) === 0) {
-        passButton = (<Button btnClasses={['secondary']} clicked={playHandler}>Play</Button>)
+    if (props.rules.canPass && (props.turn === props.index)) {
+        passButton = (<Button btnClasses={['secondary']} clicked={passHandler}>Pass</Button>)
     }
 
     let playButton = null;
-    if (props.rules.canPass && (props.turn % settings.playOrder) === 0) {
-        passButton = (<Button btnClasses={['primary']} clicked={passHandler}>Pass</Button>)
+    if (props.turn === props.index) {
+        playButton = (<Button btnClasses={['primary']} clicked={playHandler}>Play</Button>)
     }
 
     return (
@@ -72,10 +77,14 @@ const player = (props) => {
                 <div className={'col col-grow'}>
                     <h3 className={'player-title'}>{settings.name}</h3>
                 </div>
-                {playButton}
-                {passButton}
                 <div className={'col'}>
-                    <Button btnClasses={['sort-cards']} clicked={sortHandler}>sort</Button>
+                    {playButton}
+                </div>
+                <div className={'col'}>
+                    {passButton}
+                </div>
+                <div className={'col'}>
+                    <Button btnClasses={['secondary']} clicked={sortHandler}>sort</Button>
                     <FullscreenMenu btnText={'player settings'} btnIcon={'cog'} showBtnText={false}>
                         <div className={'full-width'}>
                             <h2>Player Settings for {settings.name}</h2>
@@ -85,10 +94,10 @@ const player = (props) => {
                                 <TextInput label={'Player Name'} value={settings.name} changed={nameChangedHandler} />
                             </div>
                             <div className={'col col-grow'}>
-                                <SelectList options={['option 1','option 2','option 3']} changed={null} value={settings.highlightStyle} label={'Highlight Style'} change={highlightStyleChangedHandler} />
+                                <SelectList options={playerSettingsOptions.highlightStyle} value={settings.highlightStyle} label={'Highlight Style'} changed={highlightStyleChangedHandler} />
                             </div>
                             <div className={'col col-grow'}>
-                                <SelectList options={['option 1','option 2','option 3']} changed={null} value={settings.playStyle} label={'Play Style'} change={playStyleChangedHandler} />
+                                <SelectList options={playerSettingsOptions.playStyle} value={settings.playStyle} label={'Play Style'} changed={playStyleChangedHandler} />
                             </div>
                             <div className={'col col-grow'}>
                                 <CheckboxSwitch value={settings.autoSort} label={'Auto Sort'} changed={autoSortChangedHandler} />
@@ -100,7 +109,7 @@ const player = (props) => {
                     </FullscreenMenu>
                 </div>
             </div>
-            <Hand hand={hand} faceDown={props.rules.faceDown} selectCard={selectCardHandler}/>
+            <Hand hand={hand} settings={settings} faceDown={props.rules.faceDown} selectCard={selectCardHandler}/>
         </div>
     );
 };

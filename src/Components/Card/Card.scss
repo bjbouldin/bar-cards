@@ -32,16 +32,16 @@ body {
 
 }
 
-.scale-hover .card {
+.scaleHover .card {
   width: var(--card-visible-width);
   max-width: var(--card-width);
 }
 
-.scale-hover:hover .card:hover {
+.scaleHover:hover .card:hover {
   width: calc(var(--card-visible-width)*2);
 }
 
-.scale-hover.hand:hover .card:last-child {
+.scaleHover.hand:hover .card:last-child {
   width: var(--card-width);
 }
 
@@ -90,9 +90,6 @@ body {
   transition: box-shadow 800ms ease-in-out;
   box-shadow: inset 0 0 0 0 rgb(0 0 0 / 50%);
   border-radius: calc(var(--card-margin) / 4);
-}
-
-.new-card .card-inner:after {
   animation: newCarHighlight 500ms 2 ease-in-out;
 }
 

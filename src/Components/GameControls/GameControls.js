@@ -43,10 +43,7 @@ const gameControls = (props) => {
                         </div>
                         <div className={'flex'}>
                             <div className={'col col-grow'}>
-                                <SelectList options={props.gameOptions} changed={props.gameChange} value={props.game} label={'Game'} />
-                            </div>
-                            <div className={'col col-grow'}>
-                                <CheckboxSwitch changed={settingsChangedHandler} value={true} label={'Auto Sort'} />
+                                <SelectList options={props.gameOptions} changed={settingsChangedHandler} value={props.game} label={'Game'} />
                             </div>
                         </div>
                     </FullscreenMenu>

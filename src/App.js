@@ -77,7 +77,6 @@ class App extends Component {
                 value: value,
                 suit: suitValues[(randCard % 10)],
                 selected: false,
-                newCard: true,
             }
             deck.splice(randCardIndex, 1);
             return newCard;
@@ -241,11 +240,13 @@ class App extends Component {
             <Aux>
                 {this.state.players.map((player, index) => {
                     return <Player
+                        key={player.id}
+                        index={index}
                         player={player}
                         rules={this.state.rules}
-                        key={player.id}
+                        turn={(this.state.turn >= this.state.players.length) ? this.state.turn % this.state.players.length : this.state.turn}
+                        gameStarted={this.state.gameStarted}
                         sort={this.sortCardsHandler}
-                        turn={this.state.turn}
                         playCards={this.playCardsHandler}
                         pass={this.passHandler}
                         settingChange={this.playerSettingsChangedHandler}
@@ -257,17 +258,17 @@ class App extends Component {
         return (
             <div className="App">
                 <GameControls
-                    gameSettings={this.state.gameSettings}
-                    gameChange={this.gameChangeHandler}
-                    newGame={this.newGameHandler}
-                    endGame={this.endGameHandler}
                     gameOptions={gameOptions}
-                    settingChange={this.gameSettingsChangedHandler}
-                    drawCard={this.drawCardHandler}
+                    gameSettings={this.state.gameSettings}
                     showEndGameButton={this.state.gameStarted}
                     showGameStartButton={((this.state.players.length) >= this.state.rules.minPlayers && this.state.gameStarted === false)}
                     showNewPlayerButton={((this.state.players.length) < this.state.rules.maxPlayers)}
-                    newPlayer={this.newPlayerHandler}>
+                    newPlayer={this.newPlayerHandler}
+                    newGame={this.newGameHandler}
+                    endGame={this.endGameHandler}
+                    drawCard={this.drawCardHandler}
+                    settingChange={this.gameSettingsChangedHandler}
+                    gameChange={this.gameChangeHandler}>
                     <Deck
                         drawCard={this.drawCardHandler}
                         deck={this.state.deck} />

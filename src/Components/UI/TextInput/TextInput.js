@@ -6,7 +6,7 @@ const textInput = (props) => {
 
     const [inputValue, setInputValue] = useState(props.value);
 
-    React.useEffect(() => {
+    useEffect(() => {
         props.changed(inputValue);
     }, [inputValue]);
 

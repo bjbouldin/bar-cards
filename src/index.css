@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: var(--color-felt);
+    background: rgb(var(--color-felt));
 
     --text-light: #FFFFFF;
     --text-dark: #545454;
@@ -15,22 +15,23 @@ body {
     --spacing-unit-sm: calc(var(--spacing-unit) / 2);
     --spacing-unit-lg: calc(var(--spacing-unit) * 2);
     --button-rounding: var(--border-radius-md);
-    --color-felt: #1f7d0f;
-
-    --color-btn-default: 80 145 85;
-    --color-btn-default-hover: 41 152 22;
+    --color-felt: 31 125 15;
 
 
-    --color-success: #19d17e;
-    --color-primary: #2a7dbd;
-    --color-secondary: #509155;
-    --color-warn: #bd8c2a;
-    --color-danger: #c43740;
+
+    --color-success: 25 209 126;
+    --color-primary: 42 125 189;
+    --color-secondary: 32 148 12;
+    --color-warn: 189 140 42;
+    --color-danger: 196 55 64;
 
     --card-color: 138 28 28;
     --card-heart-color: 138 28 28;
 
-    --mode-background: #fff;
+    --mode-background: 255 255 255;
+
+    --color-btn-bg: 255 255 255;
+    --color-btn-bg-hover: 80 145 85;
 }
 
 a {
