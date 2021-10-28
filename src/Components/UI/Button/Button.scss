@@ -33,6 +33,11 @@
   [class^="icon-"], [class*=" icon-"] {
     vertical-align: middle;
   }
+
+  &[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+  }
 }
 
 .btn + .btn {

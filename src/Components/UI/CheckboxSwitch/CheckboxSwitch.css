@@ -3,14 +3,12 @@
   --switch-width: 72px;
   --toggle-slide-offset: 4px;
   --toggle-slide-size: 28px;
-  --toggle-move: 36px;
+  --toggle-move: 34px;
   position: relative;
   display: inline-block;
   width: var(--switch-width);
   min-width: var(--switch-width);
   height: var(--switch-height);
-  margin-bottom: 0;
-  margin-left: 5px;
   border-radius: calc(var(--switch-height) / 2);
 }
 
@@ -37,20 +35,21 @@
 
 .toggle-slide {
   position: absolute;
-  height: var(--toggle-slide-size);
   width: var(--toggle-slide-size);
   left: var(--toggle-slide-offset);
   bottom: var(--toggle-slide-offset);
-  background-color: var(--color-secondary);
+  top: var(--toggle-slide-offset);
+  background-color: rgb(var(--mode-background)/30%);
   transition: all 400ms ease;
   text-align: center;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
-  border-radius: calc(var(--switch-height) / 2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  border-radius: var(--border-radius-md);
 }
 
 input:checked + .toggle .toggle-slide,
 .toggle.active .toggle-slide {
-  background-color: rgb(var(--mode-background));
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+  background-color: rgb(var(--mode-background)/100%);
 }
 
 input:focus + .toggle {

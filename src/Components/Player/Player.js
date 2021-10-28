@@ -15,30 +15,26 @@ const player = (props) => {
         playStyle: ['standard', 'fancy', 'obnoxious']
     }
 
-    const {hand, settings, id} = props.player;
+    const {hand, settings} = props.player;
 
     let selectCardHandler = (card) => {
-        props.selectCard(props.player.id, card);
+        props.selectCard(props.index, card);
     }
 
     let sortHandler = () => {
-        props.sort(props.player.id);
+        props.sort(props.index);
     }
 
     let playHandler = () => {
-        if (props.player.selectedCard >= props.rules.minCardPlay) {
-            props.playCards(id);
-        }
+        props.playCards(props.index);
     }
 
-    let passHandler = () => {
-        if (props.rules.canPass) {
-            props.pass(id);
-        }
+    let endTurnHandler = () => {
+        props.endTurn(props.index);
     }
 
     let settingsChangedHandler = (settingsName, newValue) => {
-        props.settingChange(settingsName, newValue, props.player.id);
+        props.settingChange(settingsName, newValue, props.index);
     }
 
     let autoSortChangedHandler = (newValue) => {
@@ -61,14 +57,17 @@ const player = (props) => {
         settingsChangedHandler('playStyle', newValue);
     }
 
-    let passButton = null;
-    if (props.rules.canPass && (props.turn === props.index)) {
-        passButton = (<Button btnClasses={['secondary']} clicked={passHandler}>Pass</Button>)
+    let endTurnButton = null;
+    if ((props.rules.canPass || props.player.played || props.player.drawCount > 0) && (props.turn === props.index)) {
+        let text = 'Pass';
+        if (props.player.played || props.player.drawCount > 0) text = 'End Turn'
+        endTurnButton = (<Button btnClasses={['secondary']} clicked={endTurnHandler}>{text}</Button>)
     }
 
     let playButton = null;
     if (props.turn === props.index) {
-        playButton = (<Button btnClasses={['primary']} clicked={playHandler}>Play</Button>)
+        playButton = (
+            <Button btnClasses={['primary']} clicked={playHandler} disabled={props.player.played}>Play</Button>)
     }
 
     return (
@@ -81,29 +80,31 @@ const player = (props) => {
                     {playButton}
                 </div>
                 <div className={'col'}>
-                    {passButton}
+                    {endTurnButton}
                 </div>
                 <div className={'col'}>
                     <Button btnClasses={['secondary']} clicked={sortHandler}>sort</Button>
+                </div>
+                <div className={'col'}>
                     <FullscreenMenu btnText={'player settings'} btnIcon={'cog'} showBtnText={false}>
                         <div className={'full-width'}>
                             <h2>Player Settings for {settings.name}</h2>
                         </div>
                         <div className={'flex'}>
                             <div className={'col col-grow'}>
-                                <TextInput label={'Player Name'} value={settings.name} changed={nameChangedHandler} />
+                                <TextInput label={'Player Name'} value={settings.name} changed={nameChangedHandler}/>
                             </div>
                             <div className={'col col-grow'}>
-                                <SelectList options={playerSettingsOptions.highlightStyle} value={settings.highlightStyle} label={'Highlight Style'} changed={highlightStyleChangedHandler} />
+                                <SelectList options={playerSettingsOptions.highlightStyle} value={settings.highlightStyle} label={'Highlight Style'} changed={highlightStyleChangedHandler}/>
                             </div>
                             <div className={'col col-grow'}>
-                                <SelectList options={playerSettingsOptions.playStyle} value={settings.playStyle} label={'Play Style'} changed={playStyleChangedHandler} />
+                                <SelectList options={playerSettingsOptions.playStyle} value={settings.playStyle} label={'Play Style'} changed={playStyleChangedHandler}/>
                             </div>
                             <div className={'col col-grow'}>
-                                <CheckboxSwitch value={settings.autoSort} label={'Auto Sort'} changed={autoSortChangedHandler} />
+                                <CheckboxSwitch value={settings.autoSort} label={'Auto Sort'} changed={autoSortChangedHandler}/>
                             </div>
                             <div className={'col col-grow'}>
-                                <CheckboxSwitch value={settings.allowReorder} label={'Allow Reorder'} changed={allowReorderChangedHandler} />
+                                <CheckboxSwitch value={settings.allowReorder} label={'Allow Reorder'} changed={allowReorderChangedHandler}/>
                             </div>
                         </div>
                     </FullscreenMenu>

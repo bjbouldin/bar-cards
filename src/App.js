@@ -5,9 +5,7 @@ import Player from './Components/Player/Player';
 import GameControls from './Components/GameControls/GameControls';
 import Deck from './Components/Deck/Deck';
 import Aux from './hoc/Aux';
-
-
-const newCards = [];
+import Hand from "./Components/Hand/Hand";
 
 class App extends Component {
 
@@ -15,6 +13,7 @@ class App extends Component {
         turn: 0,
         deck: [],
         discard: [],
+        playedHand: [[]],
         gameSettings: {
             game: 'war',
             houseRules: [],
@@ -37,6 +36,8 @@ class App extends Component {
             handSize: 5,
             faceDown: false,
             canPass: true,
+            minCardPlay: 1,
+            maxCardPlay: 13,
         }
     }
 
@@ -86,7 +87,7 @@ class App extends Component {
         }
     }
 
-    shuffleDeckHandler = () => {
+    shuffleDeckHandler = (deal) => {
         let deck = [];
         const suitValues = {...this.state.rules.suitValues};
         Object.keys(suitValues).forEach((suitNumber) => {
@@ -95,7 +96,11 @@ class App extends Component {
             })
             deck.push(...suitCards);
         })
-        this.setState({deck: deck}, this.dealHandler);
+        if (deal){
+            this.setState({deck: deck}, this.dealHandler);
+        } else {
+            this.setState({deck: deck});
+        }
     }
 
     dealHandler = () => {
@@ -130,11 +135,11 @@ class App extends Component {
             });
         }
         players[playerIndex].hand.push(this.getCard(deck));
-        turn++;
-        this.setState({turn: turn});
+        players[playerIndex].drawCount++;
+
         this.setState({deck: deck});
         if (players[playerIndex].settings.autoSort){
-            this.sortCardsHandler(players[playerIndex].id)
+            this.sortCardsHandler(playerIndex)
         } else {
             this.setState({players: players});
         }
@@ -148,18 +153,21 @@ class App extends Component {
         if (this.state.players.length < this.state.rules.minPlayers) {
             return;
         }
-        this.shuffleDeckHandler();
+        this.shuffleDeckHandler(true);
         this.setState({gameStarted: true});
     }
 
     endGameHandler = () => {
-        let deck = [];
         let players = [...this.state.players];
         players.map((player, playerIndex) => {
             players[playerIndex].hand = [];
+            players[playerIndex].played = false;
+            players[playerIndex].drawCount = 0;
         });
+
+        this.shuffleDeckHandler();
+        this.setState({playedHand: [[]]});
         this.setState({players: players});
-        this.setState({deck: deck});
         this.setState({gameStarted: false});
     }
 
@@ -168,6 +176,8 @@ class App extends Component {
         const playerId = Math.floor(Math.random() * 10000)
         const newPlayer = {
             id: playerId,
+            drawCount: 0,
+            played: false,
             settings: {
                 name: 'Player ' + (players.length + 1),
                 highlightStyle: 'standard',
@@ -185,10 +195,7 @@ class App extends Component {
         this.setState({players: players});
     }
 
-    sortCardsHandler = (playerId) => {
-        const playerIndex = this.state.players.findIndex(player => {
-            return player.id === playerId;
-        })
+    sortCardsHandler = (playerIndex) => {
         let players = [...this.state.players];
         this.sortCards(players[playerIndex].hand);
         this.setState({players: players});
@@ -200,14 +207,8 @@ class App extends Component {
         this.setState({gameSettings: gameSettings});
     }
 
-    selectCardHandler = (playerId, card) => {
+    selectCardHandler = (playerIndex, cardIndex) => {
         let players = [...this.state.players];
-        const playerIndex = players.findIndex(player => {
-            return player.id === playerId;
-        })
-        const cardIndex = players[playerIndex].hand.findIndex(handCard => {
-            return card.value === handCard.value;
-        })
         players[playerIndex].hand[cardIndex].selected = !players[playerIndex].hand[cardIndex].selected;
         this.setState({players: players});
     }
@@ -216,21 +217,39 @@ class App extends Component {
         console.log(settings);
     }
 
-    playerSettingsChangedHandler = (settingName, newValue, playerId) => {
+    playerSettingsChangedHandler = (settingName, newValue, playerIndex) => {
         let players = [...this.state.players];
-        const playerIndex = players.findIndex(player => {
-            return player.id === playerId;
-        })
         players[playerIndex].settings[settingName] = newValue;
         this.setState({players: players});
     }
 
-    playCardsHandler = (playerId) => {
+    playCardsHandler = (playerIndex) => {
+        let players = [...this.state.players];
+        let cardsToPlay = [...this.state.players[playerIndex].hand.filter(card => (card.selected))];
+
+        if (cardsToPlay.length >= this.state.rules.minCardPlay && cardsToPlay.length <= this.state.rules.maxCardPlay) {
+            let turn = this.state.turn;
+            let newHand = [...this.state.players[playerIndex].hand.filter(card => (!card.selected))];
+            let playedHand = [...this.state.playedHand];
+            playedHand[turn] = cardsToPlay.map(card => {
+                card.selected = false;
+                return card
+            });
+            players[playerIndex].hand = newHand;
+            this.setState({playedHand: playedHand}, () => {
+                players[playerIndex].played = true;
+                this.setState({players: players});
+            });
+        }
 
     }
 
-    passHandler = (playerId) => {
-
+    endTurnHandler = (playerIndex) => {
+        let players = [...this.state.players];
+        players[playerIndex].played = false;
+        players[playerIndex].drawCount = 0;
+        this.setState({turn: ++this.state.turn});
+        this.setState({players: players});
     }
 
     render() {
@@ -248,7 +267,7 @@ class App extends Component {
                         gameStarted={this.state.gameStarted}
                         sort={this.sortCardsHandler}
                         playCards={this.playCardsHandler}
-                        pass={this.passHandler}
+                        endTurn={this.endTurnHandler}
                         settingChange={this.playerSettingsChangedHandler}
                         selectCard={this.selectCardHandler}/>
                 })}
@@ -269,13 +288,16 @@ class App extends Component {
                     drawCard={this.drawCardHandler}
                     settingChange={this.gameSettingsChangedHandler}
                     gameChange={this.gameChangeHandler}>
+
+                    {/* Draw Pile */}
                     <Deck
                         drawCard={this.drawCardHandler}
                         deck={this.state.deck} />
-                    {/*<PlayArea*/}
-                    {/*    drawCard={this.drawCardHandler}*/}
-                    {/*    players={this.state.players}*/}
-                    {/*    rules={this.state.rules} />*/}
+
+                    {/* PlayArea */}
+                    <Hand hand={this.state.playedHand[this.state.playedHand.length -1]} settings={{highlightStyle:'none'}} faceDown={false} selectCard={this.shuffleDiscardHandler}/>
+
+                    {/* Discard Pile */}
                     <Deck
                         drawCard={this.shuffleDiscardHandler}
                         deck={this.state.discard} />

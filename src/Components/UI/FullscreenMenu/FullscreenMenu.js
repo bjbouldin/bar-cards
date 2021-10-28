@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import classes from './FullscreenMenu.css';
+import './FullscreenMenu.css';
 import Button from "../Button/Button";
 import Aux from '../../../hoc/Aux';
 

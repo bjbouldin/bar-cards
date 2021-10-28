@@ -11,8 +11,8 @@ const hand = (props) => {
     let handStyle = {'--card-number': props.hand.length,'--card-number-one-less': props.hand.length-1};
 
     //create all the current cards that are in the players hand
-    let cards = props.hand.map(card => {
-        return <Card key={card.value} card={card} faceDown={props.faceDown} selectCard={props.selectCard}/>
+    let cards = props.hand.map((card, index) => {
+        return <Card key={card.value} index={index} card={card} faceDown={props.faceDown} selectCard={props.selectCard}/>
     });
 
 

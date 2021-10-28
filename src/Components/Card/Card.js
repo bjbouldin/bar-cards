@@ -1,43 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import './Card.css';
 
 const card = (props) => {
-    const [displayIcons, setDisplayIcons] = useState(null);
-    const [cardClasses, setCardClasses] = useState(['card']);
 
     const {number, suit, displayNumber, selected} = props.card;
 
-    useEffect(() => {
-        setDisplayIcons(setIconsHandler());
-    }, [])
+    let cardClasses = ['card'];
+    (props.faceDown) ? cardClasses.push('face-down') : null;
+    //skip class setting when clicking the deck - the deck has null passed for number
+    if (number) {
+        (selected) ? cardClasses.push('selected') : null;
+    }
 
-    useEffect(() => {
-
-        let cardClassesCopy = [...cardClasses];
-        (props.faceDown) ? cardClassesCopy.push('face-down') : null;
-        setCardClasses(cardClassesCopy);
-    }, [])
-
-    let setIconsHandler = () => {
-        let icons = [];
-        for (let i = 0; i < number; i++) {
-            icons.push(i);
-        }
-        return (<span className={'card-icon-wrapper'}>{icons.map((icon, index) => {
+    let displayIcons;
+    //skip creating icons for face cards
+    if (Number(displayNumber) > 0){
+        //Create an array with a length equal to card number for looping over
+        displayIcons = (<span className={'card-icon-wrapper'}>{[...Array(number).keys()].map((icon, index) => {
             return <i key={index} className={'card-icon-col icon-' + suit}/>;
         })}</span>);
     }
 
     let selectCardHandler = () => {
-        //skip class setting when clicking the deck
-        if (number){
-            let cardClassesCopy = [...cardClasses];
-            (selected) ? cardClassesCopy.pop() : cardClassesCopy.push('selected');
-            setCardClasses(cardClassesCopy);
-        }
-
-        props.selectCard(props.card);
+        props.selectCard(props.index);
     }
 
     return (
